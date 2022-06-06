@@ -2,6 +2,21 @@ import pyautogui
 import time
 import json
 import keyboard
+import threading
+import sys
+
+def kill_app():
+    print("Kill finished.")
+    sys.exit()
+
+def kill_switch():
+    global kill
+    if keyboard.is_pressed("right ctrl"):
+        kill = True
+        print("Killing application.")
+    else:
+        time.sleep(0.1)
+        kill_switch()
 
 def get_locations():
     f = open("locations.json")
@@ -33,6 +48,8 @@ def get_to_armor():
         1, pyautogui.easeInQuad
     )
     pyautogui.click()
+    if kill:
+        kill_app()
 
 # def purchase(x, y):
 def purchase(points_array):
@@ -44,6 +61,8 @@ def purchase(points_array):
     pyautogui.mouseDown()
     time.sleep(3.2)
     pyautogui.mouseUp()
+    if kill:
+        kill_app()
 
 # def delete(x1, y1, x2, y2):
 def delete(points_array1, points_array2):
@@ -61,22 +80,26 @@ def delete(points_array1, points_array2):
         pyautogui.keyDown("f")
         time.sleep(2)
         pyautogui.keyUp("f")
+        if kill:
+            kill_app()
 
-def body():
+def body(buy_helm, buy_arm, buy_chest, buy_leg, buy_class):
     while True:
-        # pyautogui.write("iaa", interval=0.8)
-        # manually open up Character menu
-
         # move mouse to armor, leveling, arrow
         get_to_armor()
 
         # purchase armor
-        for i in range(10):
-            purchase(locations["helm_buy"])
-            purchase(locations["arm_buy"])
-            purchase(locations["chest_buy"])
-            purchase(locations["leg_buy"])
-            purchase(locations["class_item_buy"])
+        for i in range(9):
+            if buy_helm:
+                purchase(locations["helm_buy"])
+            if buy_arm:
+                purchase(locations["arm_buy"])
+            if buy_chest:
+                purchase(locations["chest_buy"])
+            if buy_leg:
+                purchase(locations["leg_buy"])
+            if buy_class:                
+                purchase(locations["class_item_buy"])
         
         # dismiss
         pyautogui.moveTo(
@@ -92,11 +115,16 @@ def body():
             1, pyautogui.easeInQuad
         )
         pyautogui.click()
-        delete(locations["helm"], locations["helm_sell"])
-        delete(locations["arm"], locations["arm_sell"])
-        delete(locations["chest"], locations["chest_sell"])
-        delete(locations["leg"], locations["leg_sell"])
-        delete(locations["class_item"], locations["class_item_sell"])
+        if buy_helm:
+            delete(locations["helm"], locations["helm_sell"])
+        if buy_arm:
+            delete(locations["arm"], locations["arm_sell"])
+        if buy_chest:
+            delete(locations["chest"], locations["chest_sell"])
+        if buy_leg:
+            delete(locations["leg"], locations["leg_sell"])
+        if buy_class:
+            delete(locations["class_item"], locations["class_item_sell"])
 
 
 if __name__ == "__main__":
@@ -106,6 +134,11 @@ if __name__ == "__main__":
     print("Press Space to start.")
     while True:
         if keyboard.is_pressed("space"):
+            kill = False
             break
     print("Starting.")
-    body()
+    kill_thread = threading.Thread(target=kill_switch)
+    kill_thread.start()
+
+    if kill is False:
+        body(True, True, True, True, True)
