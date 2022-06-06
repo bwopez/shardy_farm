@@ -2,7 +2,6 @@ import pyautogui
 import time
 import json
 import keyboard
-import threading
 import sys
 
 def kill_app():
@@ -14,9 +13,6 @@ def kill_switch():
     if keyboard.is_pressed("right ctrl"):
         kill = True
         print("Killing application.")
-    else:
-        time.sleep(0.1)
-        kill_switch()
 
 def get_locations():
     f = open("locations.json")
@@ -29,6 +25,7 @@ def get_to_armor():
         locations["collections"][0], locations["collections"][1],
         1, pyautogui.easeInQuad
     )
+    pyautogui.click()
     pyautogui.click()
 
     pyautogui.moveTo(
@@ -48,6 +45,7 @@ def get_to_armor():
         1, pyautogui.easeInQuad
     )
     pyautogui.click()
+    kill_switch()
     if kill:
         kill_app()
 
@@ -61,6 +59,7 @@ def purchase(points_array):
     pyautogui.mouseDown()
     time.sleep(3.2)
     pyautogui.mouseUp()
+    kill_switch()
     if kill:
         kill_app()
 
@@ -80,6 +79,7 @@ def delete(points_array1, points_array2):
         pyautogui.keyDown("f")
         time.sleep(2)
         pyautogui.keyUp("f")
+        kill_switch()
         if kill:
             kill_app()
 
@@ -155,9 +155,6 @@ if __name__ == "__main__":
             kill = False
             break
     print("Starting.")
-
-    kill_thread = threading.Thread(target=kill_switch)
-    kill_thread.start()
 
     if kill is False:
         body(buy_helm, buy_arms, buy_chest, buy_legs, buy_class)
