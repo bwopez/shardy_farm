@@ -128,6 +128,24 @@ def body(buy_helm, buy_arm, buy_chest, buy_leg, buy_class):
 
 
 if __name__ == "__main__":
+    buy_helm = True
+    buy_arms = True
+    buy_chest = True
+    buy_legs = True
+    buy_class = True
+    if len(sys.argv) > 1:
+        exclusions = str(sys.argv).split("-x")[1]
+        print("Excluding" + exclusions.replace(",", "").replace("'", "").replace("]", ""))
+        if "helm" in exclusions:
+            buy_helm = False
+        if "arms" in exclusions:
+            buy_arms = False
+        if "chest" in exclusions:
+            buy_chest = False
+        if "legs" in exclusions:
+            buy_legs = False
+        if "class" in exclusions:
+            buy_class = False
     # give time to click into destiny
     locations = get_locations()
     print("Open up to your character menu [i]")
@@ -137,8 +155,9 @@ if __name__ == "__main__":
             kill = False
             break
     print("Starting.")
+
     kill_thread = threading.Thread(target=kill_switch)
     kill_thread.start()
 
     if kill is False:
-        body(True, True, True, True, True)
+        body(buy_helm, buy_arms, buy_chest, buy_legs, buy_class)
