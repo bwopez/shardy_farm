@@ -36,11 +36,13 @@ If you would like to farm for legendary shards you can run
 ```bash
 python legendary_shards.py
 ```
-with your inventory open and follow instructions in command line. There is also a flag to exclude certain armor pieces in your farming as well with the -x option. To use the -x option you can run
-```bash
-python legendary_shards.py -x [exclusion list]
-```
+with your inventory open and follow instructions in command line. There is also a flag to exclude certain armor pieces in your farming as well with the -x option. 
 The keywords that you can use for exclusions would be: helm, arms, chest, legs, class.
+
+-x option example
+```bash
+python legendary_shards.py -x class arms 
+```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
