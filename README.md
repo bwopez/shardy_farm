@@ -44,6 +44,8 @@ The keywords that you can use for exclusions would be: helm, arms, chest, legs, 
 python legendary_shards.py -x class arms 
 ```
 
+The script takes control of your mouse and keyboard, to take back control you would need to activate the kill switch by either forcing the mouse into the top left corner of your screen or by holding the right control key until the kill switch is activated.
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
