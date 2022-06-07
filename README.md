@@ -4,6 +4,8 @@ Shardy farm is a python script that automates the process of the legendary shard
 
 ## Installation
 
+You will need python3+ to run this script. Follow instructions [here](https://phoenixap.com/kb/how-to-install-python-3-windows) for a Windows install. Download the ZIP file for this repository and unZIP it in a folder of your choosing. Open a command line in the folder that holds the repository. A [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) is recommended but not required.
+
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all requirements.
 
 ```bash
@@ -39,7 +41,7 @@ python legendary_shards.py
 with your inventory open and follow instructions in command line. There is also a flag to exclude certain armor pieces in your farming as well with the -x option. 
 The keywords that you can use for exclusions would be: helm, arms, chest, legs, class.
 
--x option example
+-x option example:
 ```bash
 python legendary_shards.py -x class arms 
 ```
